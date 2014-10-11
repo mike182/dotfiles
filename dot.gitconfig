@@ -1,0 +1,49 @@
+[user]
+	name = mike
+	email = rodrig.tek@gmail.com
+
+[sendemail]
+	smtpencryption = tls
+	smtpserver = smtp.gmail.com
+	smtpuser = rodrig.tek@gmail.com
+	smtpserverport = 587
+
+[github]
+	user = mike182
+
+[core]
+	quotepath = false
+
+[interactive]
+	singlekey = true
+
+[color]
+	ui = true
+	interactive = true
+
+# [advice]
+# 	statusHints = false
+
+[diff]
+	renames = copies
+	mnemonicprefix = true
+	algorithm = patience
+
+# [branch]
+# 	autosetupmerge = true
+
+[push]
+	default = tracking
+
+[rerere]
+	enabled = true
+
+[merge]
+	stat = true
+
+[alias]
+	ci = commit
+	co = checkout
+	st = status -sb
+	br = branch
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
