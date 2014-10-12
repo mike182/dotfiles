@@ -18,8 +18,8 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-markdown'
 Plugin 'vim-jp/cpp-vim'
 Plugin 'tpope/vim-afterimage'
-Plugin 'nanotech/jellybeans.vim'
 
+Plugin 'vim-scripts/Shebang'
 Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/syntastic'
 Plugin 'pyflakes/pyflakes' " deprecated
@@ -38,7 +38,6 @@ Plugin 'pyflakes/pyflakes' " deprecated
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'a.vim'
-Plugin 'shebang.vim'
 Plugin 'google.vim'
 
 call vundle#end()            " required
@@ -76,7 +75,6 @@ set conceallevel=2              " hide concealed text unless replacement char is
 set cpoptions+=$                " 'cw' and friends puts a $ at the end
 set cpoptions+=ces$ " make the 'cw' and like commands put a $ at the end "TEST
 set formatoptions+=1            " don't break lines after a single-char word
-set formatoptions+=j            " remove comment leader when joining lines
 set hidden                      " keep buffers around hidden
 
 " Search:
