@@ -3,9 +3,13 @@ filetype off			" required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/bundle/c
+set rtp+=~/.vim/bundle/cpp
+set rtp+=~/.vim/bundle/python
+set rtp+=~/.vim/bundle/colorschemes
+
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-
 " plugin on GitHub repo
 Plugin 'Rip-Rip/clang_complete'
 Plugin 'scrooloose/nerdtree'
@@ -18,7 +22,7 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-markdown'
 Plugin 'vim-jp/cpp-vim'
 Plugin 'tpope/vim-afterimage'
-
+" testing
 Plugin 'vim-scripts/Shebang'
 Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/syntastic'
@@ -28,20 +32,24 @@ Plugin 'pyflakes/pyflakes' " deprecated
 " Plugin 'derekwyatt/vim-scala'
 " Plugin 'bronson/vim-trailing-whitespace'
 " Plugin 'tpope/vim-pastie'
-"
+" old
 " w0ng/vim-hybrid
 " Plugin 'xuhdev/SingleCompile'
 " Plugin 'xolox/vim-easytags'
 " Plugin 'xolox/vim-misc'
 " Plugin 'Lokaltog/vim-easymotion'
 " Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'a.vim'
 Plugin 'google.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+filetype plugin on
+filetype indent on
+set nocompatible
+set shell=zsh
 
 " Brief help
 " :PluginList       - lists configured plugins
@@ -53,7 +61,7 @@ filetype plugin indent on    " required
 " let base16colorspace=256  " Access colors present in 256 colorspace
 " set background=dark
 
-" set t_Co=256
+set t_Co=256
 colorscheme jellybeans
 
 syntax on                       " syntax coloring
@@ -64,7 +72,7 @@ set smarttab                    " insert shiftwidth spaces instead of tabs
 set shiftwidth=2                " indent using 2 spaces
 set softtabstop=2               " tabs account for 2 spaces
 set tabstop=8                   " keep a standard size for real tabs
-set colorcolumn=80              " highlight columns after 80
+" set colorcolumn=80              " highlight columns after 80
 set nowrap " do not split the line if it is too long "TEST
 set listchars=tab:>\ ,eol:$    " set symbols for tabstops and EOLs
 
@@ -73,7 +81,7 @@ set backspace=indent,eol,start  " backspace over everything
 set concealcursor=niv           " conceal in all modes
 set conceallevel=2              " hide concealed text unless replacement char is defined
 set cpoptions+=$                " 'cw' and friends puts a $ at the end
-set cpoptions+=ces$ " make the 'cw' and like commands put a $ at the end "TEST
+" set cpoptions+=ces$ " make the 'cw' and like commands put a $ at the end "TEST
 set formatoptions+=1            " don't break lines after a single-char word
 set hidden                      " keep buffers around hidden
 
@@ -98,7 +106,7 @@ set display=uhex                " show unprintable characters as <xx>
 set encoding=utf-8              " use a sane mutltibyte encoding
 set laststatus=2                " always show the status line
 set mouse=a                     " enable the xterm mouse (rarely useful)
-set relativenumber              " show line offsets relative to cursor
+" set relativenumber              " show line offsets relative to cursor
 set ruler                       " show position in file
 set scrolloff=3                 " keep some space at the screen top/bottom
 set shortmess=aoOtTI            " be less verbose in prompts and messages
@@ -163,8 +171,8 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_height = 40
 let g:ctrlp_max_files = 0
 let g:ctrlp_custom_ignore = {
- \ 'dir': '\v[\/](build|release|test|unittests|examples)$'
- \ }
+      \ 'dir': '\v[\/](build|release|test|unittests|examples)$'
+      \ }
 
 "" A:
 let g:alternateExtensions_cpp = "hpp,hh,h"
@@ -232,7 +240,7 @@ cnoreabbrev <expr> scala getcmdtype()==':'&&getcmdline()=~#'^scala'?'!scala %':'
 " Remap Caps Lock to ESC
 let hasMac = has('unix') && system("uname") == "Darwin\n"
 if has('unix') && !hasMac
-silent !whereis xmodmap && xmodmap -e "clear lock" -e "keycode 0x42 = Escape"
+  silent !whereis xmodmap && xmodmap -e "clear lock" -e "keycode 0x42 = Escape"
 endif
 
 " Various mapping to set indent
