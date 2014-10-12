@@ -10,4 +10,4 @@ for file in dot.*; do
 done
 
 echo "Installing vim bundles"
-vim +BundleInstall +qall
+vim +PluginInstall +qall
