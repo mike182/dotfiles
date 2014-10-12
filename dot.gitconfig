@@ -14,6 +14,9 @@
 [core]
 	quotepath = false
 
+[help]
+	autocorrect = 10
+
 [interactive]
 	singlekey = true
 
@@ -39,6 +42,7 @@
 	enabled = true
 
 [merge]
+	log = true
 	stat = true
 
 [alias]
