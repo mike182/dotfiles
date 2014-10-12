@@ -105,7 +105,7 @@ set completeopt=menu,longest    " disable the preview window
 set display=uhex                " show unprintable characters as <xx>
 set encoding=utf-8              " use a sane mutltibyte encoding
 set laststatus=2                " always show the status line
-set mouse=a                     " enable the xterm mouse (rarely useful)
+" set mouse=a                     " enable the xterm mouse (rarely useful)
 " set relativenumber              " show line offsets relative to cursor
 set ruler                       " show position in file
 set scrolloff=3                 " keep some space at the screen top/bottom
@@ -188,7 +188,7 @@ let g:clang_complete_copen = 1
 let g:clang_hl_errors = 1
 let g:clang_periodic_quickfix = 1
 let g:clang_snippets = 0
-let g:clang_snippets_engine = "UltiSnips"
+" let g:clang_snippets_engine = "UltiSnips"
 let g:clang_conceal_snippets = 1
 let g:clang_trailing_placeholder = 1
 let g:clang_close_preview = 1
@@ -201,9 +201,9 @@ let g:clang_sort_algo = "priority"
 let g:clang_complete_macros = 0
 let g:clang_complete_patterns = 0
 
-"" Clangformat:
-map <leader>f :pyf $HOME/.vim/scripts/clang-format.py<CR>
-imap <leader>f <ESC>:pyf $HOME/.vim/scripts/clang-format.py<CR>i
+" "" Clangformat:
+" map <leader>f :pyf $HOME/.vim/scripts/clang-format.py<CR>
+" imap <leader>f <ESC>:pyf $HOME/.vim/scripts/clang-format.py<CR>i
 
 "" Remap:
 nmap <leader>l :set list!<CR>
