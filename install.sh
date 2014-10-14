@@ -1,7 +1,4 @@
-#!/bin/sh
-
-echo "Cloning repos"
-git submodule update --init --recursive
+#!/bin/bash
 
 for file in dot.*; do
   name=${file/dot/}
