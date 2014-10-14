@@ -9,7 +9,9 @@ set rtp+=~/.vim/bundle/python
 set rtp+=~/.vim/bundle/colorschemes
 
 call vundle#begin()
+
 Plugin 'gmarik/Vundle.vim'
+"
 " plugin on GitHub repo
 Plugin 'Rip-Rip/clang_complete'
 Plugin 'scrooloose/nerdtree'
@@ -20,25 +22,23 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-markdown'
-Plugin 'vim-jp/cpp-vim'
-Plugin 'tpope/vim-afterimage'
+" Plugin 'vim-jp/cpp-vim'
+" Plugin 'tpope/vim-afterimage'
+
 " testing
-Plugin 'vim-scripts/Shebang'
-Plugin 'godlygeek/tabular'
-Plugin 'scrooloose/syntastic'
-Plugin 'pyflakes/pyflakes' " deprecated
+" Plugin 'vim-scripts/Shebang'
+" Plugin 'godlygeek/tabular'
+" Plugin 'scrooloose/syntastic'
+Plugin 'pyflakes/pyflakes' " may switch to syntastic
 " Plugin 'majutsushi/tagbar'
 " Plugin 'tpope/vim-obsession'
 " Plugin 'derekwyatt/vim-scala'
 " Plugin 'bronson/vim-trailing-whitespace'
 " Plugin 'tpope/vim-pastie'
 " old
-" w0ng/vim-hybrid
+" Plugin 'w0ng/vim-hybrid'
 " Plugin 'xuhdev/SingleCompile'
-" Plugin 'xolox/vim-easytags'
-" Plugin 'xolox/vim-misc'
-" Plugin 'Lokaltog/vim-easymotion'
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+"
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'a.vim'
 Plugin 'google.vim'
@@ -50,12 +50,6 @@ filetype plugin on
 filetype indent on
 set nocompatible
 set shell=zsh
-
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 
 " colorscheme base16-default
 " let base16colorspace=256  " Access colors present in 256 colorspace
@@ -72,16 +66,14 @@ set smarttab                    " insert shiftwidth spaces instead of tabs
 set shiftwidth=2                " indent using 2 spaces
 set softtabstop=2               " tabs account for 2 spaces
 set tabstop=8                   " keep a standard size for real tabs
+set listchars=tab:>\ ,eol:$     " set symbols for tabstops and EOLs
+set nowrap                      " do not split the line if it is too long "TEST
+set modelines=5                 " enable modlines
 " set colorcolumn=80              " highlight columns after 80
-set nowrap " do not split the line if it is too long "TEST
-set listchars=tab:>\ ,eol:$    " set symbols for tabstops and EOLs
 
 " Edition:
 set backspace=indent,eol,start  " backspace over everything
-set concealcursor=niv           " conceal in all modes
-set conceallevel=2              " hide concealed text unless replacement char is defined
 set cpoptions+=$                " 'cw' and friends puts a $ at the end
-" set cpoptions+=ces$ " make the 'cw' and like commands put a $ at the end "TEST
 set formatoptions+=1            " don't break lines after a single-char word
 set hidden                      " keep buffers around hidden
 
@@ -105,10 +97,8 @@ set completeopt=menu,longest    " disable the preview window
 set display=uhex                " show unprintable characters as <xx>
 set encoding=utf-8              " use a sane mutltibyte encoding
 set laststatus=2                " always show the status line
-" set mouse=a                     " enable the xterm mouse (rarely useful)
-" set relativenumber              " show line offsets relative to cursor
 set ruler                       " show position in file
-set scrolloff=3                 " keep some space at the screen top/bottom
+set scrolloff=5                 " keep some space at the screen top/bottom
 set shortmess=aoOtTI            " be less verbose in prompts and messages
 set showcmd                     " show partial commands
 set showmode                    " show current mode
@@ -139,9 +129,6 @@ set cinoptions=:0,g0,(0,Ws,l1
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
-" disable annoying hlsearch on demand
-nnoremap <leader><space> :noh<cr>
-
 "" Panes: ^H,^J,^K,^L
 map <C-H> <C-W>h
 map <C-J> <C-W>j
@@ -163,6 +150,12 @@ command! DeleteTrailingWs :%s/\s\+$//
 command! Untab :%s/\t/  /g
 " Highlight trailing whitespace and lines longer than 80 columns.
 highlight WhitespaceEOL ctermbg=DarkYellow guibg=DarkYellow
+" Whitespace at the end of a line. This suppresses whitespace that has just been typed
+au BufWinEnter * let w:m1=matchadd('WhitespaceEOL', '\s\+$', -1)
+au InsertEnter * call matchdelete(w:m1)
+au InsertEnter * let w:m2=matchadd('WhitespaceEOL', '\s\+\%#\@<!$', -1)
+au InsertLeave * call matchdelete(w:m2)
+au InsertLeave * let w:m1=matchadd('WhitespaceEOL', '\s\+$', -1)
 
 "" CtrlP:
 nnoremap ,, :CtrlP<CR>
@@ -212,7 +205,6 @@ map ,l :setlocal number!<CR>
 nmap ,c :tabnew<CR>
 nmap ,d	:tabclose<CR>
 
-
 " "" Tagbar:
 " nnoremap ,t :TagbarOpen<CR>
 " nnoremap ,s :TagbarShowTag<CR>
@@ -231,6 +223,9 @@ function! s:insert_gates()
   normal! ko
 endfunction
 autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
+
+" disable annoying hlsearch on demand
+nnoremap <leader><space> :noh<cr>
 
 " enable :make
 au BufEnter *.scala compiler scala
