@@ -2,7 +2,7 @@ set nocompatible		" be iMproved, required
 filetype off			" required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/bundle/vundle
 set rtp+=~/.vim/bundle/c
 set rtp+=~/.vim/bundle/cpp
 set rtp+=~/.vim/bundle/python
