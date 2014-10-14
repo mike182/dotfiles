@@ -106,7 +106,7 @@ set timeoutlen=200              " max interval between keys in a mapped sequence
 set visualbell
 
 " Statusline:
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+silent! set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 " Tools:
 set tags=tags;/                 " look for ctags in parent directories
