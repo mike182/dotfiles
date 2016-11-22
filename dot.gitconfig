@@ -1,11 +1,11 @@
 [user]
 	name = mike
-	email = rodrig.tek@gmail.com
+	email = *******@gmail.com
 
 [sendemail]
 	smtpencryption = tls
 	smtpserver = smtp.gmail.com
-	smtpuser = rodrig.tek@gmail.com
+	smtpuser = ********@gmail.com
 	smtpserverport = 587
 
 [github]
