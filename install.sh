@@ -6,5 +6,6 @@ for file in dot.*; do
   ln -snf `pwd`/$file ~/$name
 done
 
-echo "Installing vim bundles"
-vim +PluginInstall +qall
+echo "Installing vim plugins"
+vim -v -es -u ~/.vimrc -i NONE -c "PlugInstall" -c "qa" # -v verbose check for errors
+# vim -es -u ~/.vimrc -i NONE -c "PlugInstall" -c "qa"

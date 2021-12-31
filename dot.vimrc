@@ -1,6 +1,3 @@
-set nocompatible               " be iMproved, required
-filetype off                   " required
-
 " vim-plug install
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
