@@ -1,11 +1,12 @@
 dotfiles
 ========
 
-* vim
-* zsh
-* git
+vim/zsh/git
 
+```bash
+ln -snf ./dot.vimrc ~/.vimrc
+ln -snf ./dot.zshrc ~/.zshrc
+ln -snf ./dot.gitconfig ~/.gitconfig
 
-* https://github.com/qikon/dotfiles
-* https://github.com/scarunkk/dotfiles
-* http://nuclearsquid.com/writings/git-tricks-tips-workflows/
+vim -v -es -u ~/.vimrc -i NONE -c "PlugInstall" -c "qa"
+```
