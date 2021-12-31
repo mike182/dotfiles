@@ -1,50 +1,39 @@
-set nocompatible		" be iMproved, required
-filetype off			" required
+set nocompatible               " be iMproved, required
+filetype off                   " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-set rtp+=~/.vim/bundle/c
-set rtp+=~/.vim/bundle/cpp
-set rtp+=~/.vim/bundle/python
-set rtp+=~/.vim/bundle/colorschemes
+" vim-plug install
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-call vundle#begin()
+" vim-plug plugins
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
 
-Plugin 'gmarik/Vundle.vim'
-"
 " plugin on GitHub repo
-Plugin 'Rip-Rip/clang_complete'
-Plugin 'scrooloose/nerdtree'
-Plugin 'ervandew/supertab'
-Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-eunuch'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-markdown'
-" Plugin 'vim-jp/cpp-vim'
-" Plugin 'tpope/vim-afterimage'
-
-" testing
-" Plugin 'vim-scripts/Shebang'
-" Plugin 'godlygeek/tabular'
-" Plugin 'scrooloose/syntastic'
-Plugin 'pyflakes/pyflakes' " may switch to syntastic
-" Plugin 'majutsushi/tagbar'
-" Plugin 'tpope/vim-obsession'
-" Plugin 'derekwyatt/vim-scala'
-" Plugin 'bronson/vim-trailing-whitespace'
-" Plugin 'tpope/vim-pastie'
-" old
-" Plugin 'w0ng/vim-hybrid'
-" Plugin 'xuhdev/SingleCompile'
-"
-" plugin from http://vim-scripts.org/vim/scripts.html
-Plugin 'a.vim'
-Plugin 'google.vim'
-
-call vundle#end()            " required
-filetype plugin indent on    " required
+Plug 'Rip-Rip/clang_complete'
+Plug 'scrooloose/nerdtree'
+Plug 'ervandew/supertab'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-markdown'
+Plug 'vim-scripts/a.vim'
+Plug 'vim-scripts/google.vim'
+" Testing
+" Plug 'vim-scripts/Shebang'
+" Plug 'godlygeek/tabular'
+Plug 'scrooloose/syntastic'
+Plug 'majutsushi/tagbar'
+" Plug 'derekwyatt/vim-scala'
+" Initialize plugin system
+call plug#end()
 
 filetype plugin on
 filetype indent on
@@ -63,8 +52,8 @@ syntax on                       " syntax coloring
 " Style:
 set expandtab                   " replace tabs by spaces
 set smarttab                    " insert shiftwidth spaces instead of tabs
-set shiftwidth=2                " indent using 2 spaces
-set softtabstop=2               " tabs account for 2 spaces
+set shiftwidth=4                " indent using 2 spaces
+set softtabstop=4               " tabs account for 2 spaces
 set tabstop=8                   " keep a standard size for real tabs
 set listchars=tab:>\ ,eol:$     " set symbols for tabstops and EOLs
 set nowrap                      " do not split the line if it is too long "TEST
@@ -104,9 +93,11 @@ set showcmd                     " show partial commands
 set showmode                    " show current mode
 set timeoutlen=200              " max interval between keys in a mapped sequence (default 1000)
 set visualbell
+set t_vb=
+set number
 
 " Statusline:
-silent! set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+"silent! set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 " Tools:
 set tags=tags;/                 " look for ctags in parent directories
@@ -179,9 +170,9 @@ let g:clang_auto_select = 2
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_hl_errors = 1
-let g:clang_periodic_quickfix = 1
+let g:clang_periodic_quickfix = 0
 let g:clang_snippets = 0
-" let g:clang_snippets_engine = "UltiSnips"
+"let g:clang_snippets_engine = "UltiSnips"
 let g:clang_conceal_snippets = 1
 let g:clang_trailing_placeholder = 1
 let g:clang_close_preview = 1
@@ -189,10 +180,12 @@ let g:clang_exec = "clang"
 let g:clang_user_options = ""
 let g:clang_auto_user_options = "compile_commands.json"
 let g:clang_use_library = 1
-let g:clang_library_path = "/usr/local/lib/"
+"let g:clang_library_path = "/usr/local/lib/"
+let g:clang_library_path = "/usr/lib/llvm-11/lib/"
 let g:clang_sort_algo = "priority"
 let g:clang_complete_macros = 0
 let g:clang_complete_patterns = 0
+"let g:clang_debug = 1
 
 " "" Clangformat:
 " map <leader>f :pyf $HOME/.vim/scripts/clang-format.py<CR>
@@ -233,13 +226,14 @@ au BufEnter *.scala compiler scala
 cnoreabbrev <expr> scala getcmdtype()==':'&&getcmdline()=~#'^scala'?'!scala %':'scala'
 
 " Remap Caps Lock to ESC
-let hasMac = has('unix') && system("uname") == "Darwin\n"
-if has('unix') && !hasMac
-  silent !whereis xmodmap && xmodmap -e "clear lock" -e "keycode 0x42 = Escape"
-endif
+"let hasMac = has('unix') && system("uname") == "Darwin\n"
+"if has('unix') && !hasMac
+"  silent !whereis xmodmap && xmodmap -e "clear lock" -e "keycode 0x42 = Escape"
+"endif
 
 " Various mapping to set indent
 nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+

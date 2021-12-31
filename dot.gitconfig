@@ -1,15 +1,18 @@
 [user]
 	name = mike
-	email = *******@gmail.com
+	email = rodrig.tek@gmail.com
+
+[github]
+	user = mike182
+
+[credential]
+	helper = store
 
 [sendemail]
 	smtpencryption = tls
 	smtpserver = smtp.gmail.com
 	smtpuser = ********@gmail.com
 	smtpserverport = 587
-
-[github]
-	user = mike182
 
 [core]
 	quotepath = false
@@ -24,7 +27,7 @@
 	ui = true
 	interactive = true
 
-# [advice]
+[advice]
 # 	statusHints = false
 
 [diff]
@@ -32,7 +35,7 @@
 	mnemonicprefix = true
 	algorithm = patience
 
-# [branch]
+[branch]
 # 	autosetupmerge = true
 
 [push]
