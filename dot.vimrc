@@ -12,34 +12,49 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " plugin on GitHub repo
+" ---------------------
 Plug 'Rip-Rip/clang_complete'
 Plug 'scrooloose/nerdtree'
-Plug 'ervandew/supertab'
+" Plug 'scrooloose/nerdtree-project-plugin'
+Plug 'ervandew/supertab' " completion tab
 Plug 'kien/ctrlp.vim'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-eunuch' " Helpers for UNIX
+Plug 'tpope/vim-fugitive' " A git wrapper
+Plug 'tpope/vim-commentary' " Comment stuff out
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-markdown'
-Plug 'vim-scripts/a.vim'
-Plug 'vim-scripts/google.vim'
+Plug 'tpope/vim-markdown' " md runtime files
+Plug 'vim-scripts/a.vim' " quick switch source / header
+" Plug 'vim-scripts/google.vim'
+" -------
 " Testing
-" Plug 'vim-scripts/Shebang'
-" Plug 'godlygeek/tabular'
-Plug 'scrooloose/syntastic'
+" -------
+Plug 'SirVer/ultisnips'
+" Plug 'dense-analysis/ale' " syntax check
+" Plug 'scrooloose/syntastic' " Syntax Checker
+" Plug 'vhdirk/vim-cmake'
+Plug 'kana/vim-smartinput' " autoclosing
+" Plug 'Raimondi/delimitMate' " autoclosing
+Plug 'godlygeek/tabular' " Alignment
+Plug 'tpope/vim-apathy' " Path searching options
+Plug 'tpope/vim-surround' " surrounding: cs<char1><char2>
+Plug 'tpope/vim-repeat' " Repeat support for surround and unimpaired
+Plug 'vim-scripts/Shebang' " set correct shebang
 Plug 'majutsushi/tagbar'
+" ---
+" Old
+" ---
 " Plug 'derekwyatt/vim-scala'
+
 " Initialize plugin system
 call plug#end()
 
+filetype on
 filetype plugin on
 filetype indent on
-set nocompatible
-set shell=zsh
 
-" colorscheme base16-default
-" let base16colorspace=256  " Access colors present in 256 colorspace
-" set background=dark
+set nocompatible
+
+set shell=zsh
 
 set t_Co=256
 colorscheme jellybeans
@@ -73,7 +88,7 @@ set wrapscan                    " wrap around end of file
 " Brackets:
 set matchpairs+=<:>             " <> also are a matching pair
 set showmatch                   " show matching bracket when inserting
-set matchtime=2                 " quickly show the matching bracket
+set matchtime=3                 " quickly show the matching bracket
 
 " General:
 set autoindent                  " indent new lines
@@ -94,7 +109,7 @@ set t_vb=
 set number
 
 " Statusline:
-silent! set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+"silent! set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 " Tools:
 set tags=tags;/                 " look for ctags in parent directories
@@ -114,8 +129,8 @@ augroup END
 set cinoptions=:0,g0,(0,Ws,l1
 
 " Term: change cursor shape based on mode (iTerm2)
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+" let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+" let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 "" Panes: ^H,^J,^K,^L
 map <C-H> <C-W>h
@@ -134,8 +149,7 @@ map k gk
 "" Cleanup:
 " Delete trailing whitespace and tabs at the end of each line
 command! DeleteTrailingWs :%s/\s\+$//
-" Convert all tab characters to two spaces
-command! Untab :%s/\t/  /g
+
 " Highlight trailing whitespace and lines longer than 80 columns.
 highlight WhitespaceEOL ctermbg=DarkYellow guibg=DarkYellow
 " Whitespace at the end of a line. This suppresses whitespace that has just been typed
@@ -148,7 +162,7 @@ au InsertLeave * let w:m1=matchadd('WhitespaceEOL', '\s\+$', -1)
 "" CtrlP:
 nnoremap ,, :CtrlP<CR>
 nnoremap ,m :CtrlPCurWD<CR>
-let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_max_height = 40
 let g:ctrlp_max_files = 0
 let g:ctrlp_custom_ignore = {
@@ -169,7 +183,7 @@ let g:clang_complete_copen = 1
 let g:clang_hl_errors = 1
 let g:clang_periodic_quickfix = 0
 let g:clang_snippets = 0
-"let g:clang_snippets_engine = "UltiSnips"
+let g:clang_snippets_engine = "UltiSnips"
 let g:clang_conceal_snippets = 1
 let g:clang_trailing_placeholder = 1
 let g:clang_close_preview = 1
@@ -177,14 +191,14 @@ let g:clang_exec = "clang"
 let g:clang_user_options = ""
 let g:clang_auto_user_options = "compile_commands.json"
 let g:clang_use_library = 1
-"let g:clang_library_path = "/usr/local/lib/"
+let g:clang_library_path = "/usr/local/lib/"
 let g:clang_library_path = "/usr/lib/llvm-11/lib/"
 let g:clang_sort_algo = "priority"
 let g:clang_complete_macros = 0
 let g:clang_complete_patterns = 0
-"let g:clang_debug = 1
+let g:clang_debug = 1
 
-" "" Clangformat:
+"" Clangformat:
 " map <leader>f :pyf $HOME/.vim/scripts/clang-format.py<CR>
 " imap <leader>f <ESC>:pyf $HOME/.vim/scripts/clang-format.py<CR>i
 
@@ -195,14 +209,14 @@ map ,l :setlocal number!<CR>
 nmap ,c :tabnew<CR>
 nmap ,d	:tabclose<CR>
 
-" "" Tagbar:
-" nnoremap ,t :TagbarOpen<CR>
-" nnoremap ,s :TagbarShowTag<CR>
-" nnoremap <leader>[ :TagbarToggle<CR>
+"" Tagbar:
+nnoremap ,t :TagbarOpen<CR>
+nnoremap ,s :TagbarShowTag<CR>
+nnoremap <leader>[ :TagbarToggle<CR>
 
 "" Completion / SuperTab:
-let g:SuperTabDefaultCompletionType = 'context'
-set completeopt+=menuone,longest
+" let g:SuperTabDefaultCompletionType = 'context'
+" set completeopt+=menuone,longest
 
 " Header insert in h,hpp
 function! s:insert_gates()
@@ -212,15 +226,10 @@ function! s:insert_gates()
   execute "normal! Go#endif // __" . gatename . "__"
   normal! ko
 endfunction
-autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
+autocmd BufNewFile *.{h,hh,hpp} call <SID>insert_gates()
 
 " disable annoying hlsearch on demand
 nnoremap <leader><space> :noh<cr>
-
-" enable :make
-au BufEnter *.scala compiler scala
-" :scala --> !scala %
-cnoreabbrev <expr> scala getcmdtype()==':'&&getcmdline()=~#'^scala'?'!scala %':'scala'
 
 " Remap Caps Lock to ESC
 "let hasMac = has('unix') && system("uname") == "Darwin\n"
@@ -234,5 +243,4 @@ nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 
-" autocmd VimEnter * if !argc() | Explore | endif
-
+" let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
