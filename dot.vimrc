@@ -13,10 +13,10 @@ call plug#begin('~/.vim/plugged')
 
 " plugin on GitHub repo
 " ---------------------
-Plug 'Rip-Rip/clang_complete'
+Plug 'ycm-core/YouCompleteMe'
+" Plug 'Rip-Rip/clang_complete'
 Plug 'scrooloose/nerdtree'
-" Plug 'scrooloose/nerdtree-project-plugin'
-Plug 'ervandew/supertab' " completion tab
+" Plug 'ervandew/supertab' " completion tab
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-eunuch' " Helpers for UNIX
 Plug 'tpope/vim-fugitive' " A git wrapper
@@ -28,38 +28,32 @@ Plug 'vim-scripts/a.vim' " quick switch source / header
 " -------
 " Testing
 " -------
-Plug 'SirVer/ultisnips'
-" Plug 'dense-analysis/ale' " syntax check
-" Plug 'scrooloose/syntastic' " Syntax Checker
-" Plug 'vhdirk/vim-cmake'
-Plug 'kana/vim-smartinput' " autoclosing
-" Plug 'Raimondi/delimitMate' " autoclosing
+" Plug 'SirVer/ultisnips'
+" Plug 'kana/vim-smartinput' " autoclosing !!
 Plug 'godlygeek/tabular' " Alignment
 Plug 'tpope/vim-apathy' " Path searching options
 Plug 'tpope/vim-surround' " surrounding: cs<char1><char2>
 Plug 'tpope/vim-repeat' " Repeat support for surround and unimpaired
 Plug 'vim-scripts/Shebang' " set correct shebang
-Plug 'majutsushi/tagbar'
-" ---
-" Old
-" ---
+" Plug 'majutsushi/tagbar'
+" ----------
+" Old unused
+" ----------
 " Plug 'derekwyatt/vim-scala'
 
 " Initialize plugin system
 call plug#end()
 
-filetype on
-filetype plugin on
-filetype indent on
-
 set nocompatible
 
-set shell=zsh
 
-set t_Co=256
-colorscheme jellybeans
+filetype on                     " detect file type
+filetype plugin on              " ftplugin.vim
+filetype indent on              " indent.vim
 
 syntax on                       " syntax coloring
+set t_Co=256                    " number of colors
+colorscheme jellybeans
 
 " Style:
 set expandtab                   " replace tabs by spaces
@@ -91,6 +85,7 @@ set showmatch                   " show matching bracket when inserting
 set matchtime=3                 " quickly show the matching bracket
 
 " General:
+set shell=zsh
 set autoindent                  " indent new lines
 set autoread                    " watch for file changes by other programs
 set autowrite                   " save before CTRL-O and friends
@@ -104,9 +99,10 @@ set shortmess=aoOtTI            " be less verbose in prompts and messages
 set showcmd                     " show partial commands
 set showmode                    " show current mode
 set timeoutlen=200              " max interval between keys in a mapped sequence (default 1000)
-set visualbell
-set t_vb=
-set number
+set visualbell                  " visual bell instad of beeping
+set t_vb=                       " no beep or flash
+set number                      " show line numbers
+set signcolumn=number           " show signs in the 'number' column
 
 " Statusline:
 "silent! set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
@@ -132,7 +128,7 @@ set cinoptions=:0,g0,(0,Ws,l1
 " let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 " let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
-"" Panes: ^H,^J,^K,^L
+" Panes: ^H,^J,^K,^L
 map <C-H> <C-W>h
 map <C-J> <C-W>j
 map <C-K> <C-W>k
@@ -146,7 +142,7 @@ map H gT
 map j gj
 map k gk
 
-"" Cleanup:
+" Cleanup:
 " Delete trailing whitespace and tabs at the end of each line
 command! DeleteTrailingWs :%s/\s\+$//
 
@@ -159,7 +155,7 @@ au InsertEnter * let w:m2=matchadd('WhitespaceEOL', '\s\+\%#\@<!$', -1)
 au InsertLeave * call matchdelete(w:m2)
 au InsertLeave * let w:m1=matchadd('WhitespaceEOL', '\s\+$', -1)
 
-"" CtrlP:
+" CtrlP:
 nnoremap ,, :CtrlP<CR>
 nnoremap ,m :CtrlPCurWD<CR>
 let g:ctrlp_clear_cache_on_exit = 1
@@ -169,14 +165,14 @@ let g:ctrlp_custom_ignore = {
       \ 'dir': '\v[\/](build|release|test|unittests|examples)$'
       \ }
 
-"" A:
+" A:
 let g:alternateExtensions_cpp = "hpp,hh,h"
 let g:alternateExtensions_hh = "cpp,cc,c"
 
-"" Tagbar:
+" Tagbar:
 nnoremap \\g :TagbarOpen<CR>
 
-"" Clang_complete:
+" Clang_complete:
 let g:clang_auto_select = 2
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
@@ -198,27 +194,27 @@ let g:clang_complete_macros = 0
 let g:clang_complete_patterns = 0
 let g:clang_debug = 1
 
-"" Clangformat:
+" Clangformat:
 " map <leader>f :pyf $HOME/.vim/scripts/clang-format.py<CR>
 " imap <leader>f <ESC>:pyf $HOME/.vim/scripts/clang-format.py<CR>i
 
-"" Remap:
+" Remap:
 nmap <leader>l :set list!<CR>
 map ,p :set paste!<CR>
 map ,l :setlocal number!<CR>
 nmap ,c :tabnew<CR>
 nmap ,d	:tabclose<CR>
 
-"" Tagbar:
-nnoremap ,t :TagbarOpen<CR>
-nnoremap ,s :TagbarShowTag<CR>
-nnoremap <leader>[ :TagbarToggle<CR>
+" Tagbar:
+" nnoremap ,t :TagbarOpen<CR>
+" nnoremap ,s :TagbarShowTag<CR>
+" nnoremap <leader>[ :TagbarToggle<CR>
 
-"" Completion / SuperTab:
+" Completion / SuperTab:
 " let g:SuperTabDefaultCompletionType = 'context'
 " set completeopt+=menuone,longest
 
-" Header insert in h,hpp
+" Header insert:
 function! s:insert_gates()
   let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
   execute "normal! i#ifndef __" . gatename . "__"
@@ -238,9 +234,32 @@ nnoremap <leader><space> :noh<cr>
 "endif
 
 " Various mapping to set indent
-nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
-nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
-nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
-nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+" nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+" nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
+" nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
+" nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 
+" markdown
 " let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+
+" YouCompleteMe
+" Mapping to close the completion menu (default <C-y>)
+let g:ycm_key_list_stop_completion = ['<C-x>']
+" Set filetypes where YCM will be turned on
+let g:ycm_filetype_whitelist = { 'cpp':1, 'h':2, 'hpp':3, 'c':4, 'cxx':5 }
+" Close preview window after completing the insertion
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_confirm_extra_conf = 0                 " Don't confirm python conf
+let g:ycm_always_populate_location_list = 1      " Always populae diagnostics list
+let g:ycm_enable_diagnostic_signs = 1            " Enable line highligting diagnostics
+let g:ycm_open_loclist_on_ycm_diags = 1          " Open location list to view diagnostics
+let g:ycm_max_num_candidates = 20                " Max number of completion suggestions
+let g:ycm_max_num_identifier_candidates = 10     " Max number of identifier-based suggestions
+let g:ycm_auto_trigger = 1                       " Enable completion menu
+let g:ycm_show_diagnostic_ui = 1                 " Show diagnostic display features
+let g:ycm_error_symbol = '>>'                    " The error symbol in Vim gutter
+let g:ycm_enable_diagnostic_signs = 1            " Display icons in Vim's gutter, error, warnings
+let g:ycm_enable_diagnostic_highlighting = 1     " Highlight regions of diagnostic text
+let g:ycm_echo_current_diagnostic = 1            " Echo line's diagnostic that cursor is on
+
